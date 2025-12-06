@@ -3,8 +3,8 @@ provider "kubernetes" {
   host                   = var.kubernetes_cluster_endpoint
   exec {
     api_version = "client.authentication.k8s.io/v1beta1"
-    command     = "aws-iam-authenticator"
-    args        = ["token", "-i", "${var.kubernetes_cluster_name}"]
+    command     = "aws"
+    args        = ["eks", "get-token", "--cluster-name", "${data.aws_eks_cluster.msur.name}"]
   }
 }
 
@@ -15,8 +15,8 @@ provider "helm" {
     host                   = var.kubernetes_cluster_endpoint
     exec = {
       api_version = "client.authentication.k8s.io/v1beta1"
-      command     = "aws-iam-authenticator"
-      args        = ["token", "-i", "${var.kubernetes_cluster_name}"]
+      command     = "aws"
+      args        = ["eks", "get-token", "--cluster-name", "${data.aws_eks_cluster.msur.name}"]
     }
   }
 }
@@ -36,8 +36,8 @@ provider "kubernetes" {
   host                   = data.aws_eks_cluster.msur.endpoint
   exec {
     api_version = "client.authentication.k8s.io/v1beta1"
-    command     = "aws-iam-authenticator"
-    args        = ["token", "-i", "${data.aws_eks_cluster.msur.name}"]
+    command     = "aws"
+    args        = ["eks", "get-token", "--cluster-name", "${data.aws_eks_cluster.msur.name}"]
   }
 }
 
@@ -50,8 +50,9 @@ provider "helm" {
     host                   = data.aws_eks_cluster.msur.endpoint
     exec = {
       api_version = "client.authentication.k8s.io/v1beta1"
-      command     = "aws-iam-authenticator"
-      args        = ["token", "-i", "${data.aws_eks_cluster.msur.name}"]
+      command     = "aws"
+      args        = ["eks", "get-token", "--cluster-name", "${data.aws_eks_cluster.msur.name}"]
+      
     }
   }
 }
