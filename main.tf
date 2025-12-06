@@ -4,7 +4,7 @@ provider "kubernetes" {
   exec {
     api_version = "client.authentication.k8s.io/v1beta1"
     command     = "aws"
-    args        = ["eks", "get-token", "--cluster-name", "${data.aws_eks_cluster.msur.name}"]
+    args        = ["eks", "get-token", "--cluster-name", var.kubernetes_cluster_name]
   }
 }
 
@@ -16,7 +16,7 @@ provider "helm" {
     exec = {
       api_version = "client.authentication.k8s.io/v1beta1"
       command     = "aws"
-      args        = ["eks", "get-token", "--cluster-name", "${data.aws_eks_cluster.msur.name}"]
+      args        = ["eks", "get-token", "--cluster-name", var.kubernetes_cluster_name"]
     }
   }
 }
@@ -37,7 +37,7 @@ provider "kubernetes" {
   exec {
     api_version = "client.authentication.k8s.io/v1beta1"
     command     = "aws"
-    args        = ["eks", "get-token", "--cluster-name", "${data.aws_eks_cluster.msur.name}"]
+    args        = ["eks", "get-token", "--cluster-name", var.kubernetes_cluster_name]
   }
 }
 
@@ -51,7 +51,7 @@ provider "helm" {
     exec = {
       api_version = "client.authentication.k8s.io/v1beta1"
       command     = "aws"
-      args        = ["eks", "get-token", "--cluster-name", "${data.aws_eks_cluster.msur.name}"]
+      args        = ["eks", "get-token", "--cluster-name", var.kubernetes_cluster_name]
       
     }
   }
