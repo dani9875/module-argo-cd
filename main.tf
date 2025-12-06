@@ -1,28 +1,4 @@
-provider "kubernetes" {
-  cluster_ca_certificate = base64decode(var.kubernetes_cluster_cert_data)
-  host                   = var.kubernetes_cluster_endpoint
-  exec {
-    api_version = "client.authentication.k8s.io/v1beta1"
-    command     = "aws"
-    args        = ["eks", "get-token", "--cluster-name", var.kubernetes_cluster_name]
-  }
-}
 
-provider "helm" {
-  kubernetes = {
-    load_config_file       = false
-    cluster_ca_certificate = base64decode(var.kubernetes_cluster_cert_data)
-    host                   = var.kubernetes_cluster_endpoint
-    exec = {
-      api_version = "client.authentication.k8s.io/v1beta1"
-      command     = "aws"
-      args        = ["eks", "get-token", "--cluster-name", var.kubernetes_cluster_name"]
-    }
-  }
-}
-
-
-/*
 provider "aws" {
   region = var.aws_region
 }
@@ -37,7 +13,7 @@ provider "kubernetes" {
   exec {
     api_version = "client.authentication.k8s.io/v1beta1"
     command     = "aws"
-    args        = ["eks", "get-token", "--cluster-name", var.kubernetes_cluster_name]
+    args        = ["eks", "get-token", "--cluster-name", "${data.aws_eks_cluster.msur.name}"]
   }
 }
 
@@ -51,12 +27,12 @@ provider "helm" {
     exec = {
       api_version = "client.authentication.k8s.io/v1beta1"
       command     = "aws"
-      args        = ["eks", "get-token", "--cluster-name", var.kubernetes_cluster_name]
+      args        = ["eks", "get-token", "--cluster-name", "${data.aws_eks_cluster.msur.name}"]
       
     }
   }
 }
-*/
+
 
 resource "kubernetes_namespace_v1" "argo-ns" {
   metadata {
